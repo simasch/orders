@@ -1,6 +1,8 @@
 package test;
 
 import control.RevenueCalculator;
+import entity.CustomerRevenue;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -40,44 +42,30 @@ public class OrderTest {
 
     @Test
     public void calculateRevenueNaive() {
-        double revenue = rc.calculateRevenueNaive();
+        List<CustomerRevenue> list = rc.calculateRevenueNaive();
 
-        Assert.assertTrue(revenue > 0);
-
-        printRevenue(revenue);
+        Assert.assertTrue(list.size() > 0);
     }
 
     @Test
     public void calculateRevenueConstructorExpression() {
-        double revenue = rc.calculateRevenueConstructorExpression();
+        List<CustomerRevenue> list = rc.calculateRevenueConstructorExpression();
 
-        Assert.assertTrue(revenue > 0);
-
-        printRevenue(revenue);
+        Assert.assertTrue(list.size() > 0);
     }
 
     @Test
     public void calculateRevenueQlrm() {
-        double revenue = rc.calculateRevenueQlrm();
+        List<CustomerRevenue> list = rc.calculateRevenueQlrm();
 
-        Assert.assertTrue(revenue > 0);
-
-        printRevenue(revenue);
+        Assert.assertTrue(list.size() > 0);
     }
 
     @Test
     public void calculateRevenueJooq() {
-        double revenue = rc.calculateRevenueJooq();
+        List<CustomerRevenue> list = rc.calculateRevenueJooq();
 
-        Assert.assertTrue(revenue > 0);
-
-        printRevenue(revenue);
-    }
-
-    private void printRevenue(double revenue) {
-        System.out.println();
-        System.out.println("--> Revenue: " + revenue);
-        System.out.println();
+        Assert.assertTrue(list.size() > 0);
     }
 
 }

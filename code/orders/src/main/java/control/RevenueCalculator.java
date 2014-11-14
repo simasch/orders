@@ -1,9 +1,11 @@
 package control;
 
 import entity.Customer;
+import entity.CustomerRevenue;
 import entity.Order;
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -25,50 +27,52 @@ public class RevenueCalculator {
         this.em = em;
     }
 
-    public double calculateRevenueNaive() {
+    public List<CustomerRevenue> calculateRevenueNaive() {
         TypedQuery q = em.createQuery("SELECT c FROM Customer c", Customer.class);
         List<Customer> customers = q.getResultList();
 
-        double total = 0d;
+        List<CustomerRevenue> list = new ArrayList<>();
 
         for (Customer c : customers) {
+            double revenue = 0d;
             for (Order o : c.getOrders()) {
-                total += o.getPrice();
+                revenue += o.getPrice();
             }
+            list.add(new CustomerRevenue(c.getName(), revenue));
         }
 
-        return total;
+        return list;
     }
 
-    public double calculateRevenueConstructorExpression() {
-        Query q = em.createQuery("SELECT SUM(i.product.price) FROM Customer c JOIN c.orders o JOIN o.items i");
-        Double total = (Double) q.getSingleResult();
-        return total;
+    public List<CustomerRevenue> calculateRevenueConstructorExpression() {
+        Query q = em.createQuery("SELECT NEW entity.CustomerRevenue(c.name, SUM(i.product.price)) FROM Customer c JOIN c.orders o JOIN o.items i GROUP BY c.name");
+        return q.getResultList();
     }
 
-    public double calculateRevenueQlrm() {
-        Query q = em.createNativeQuery("SELECT SUM(P.PRICE) FROM CUSTOMERS C JOIN ORDERS O ON O.CUSTOMER_ID = C.ID JOIN ORDERITEMS I ON I.ORDER_ID = O.ID JOIN PRODUCTS P ON P.ID = I.PRODUCT_ID");
+    public List<CustomerRevenue> calculateRevenueQlrm() {
+        Query q = em.createNativeQuery(
+                "SELECT C.NAME, SUM(P.PRICE) FROM CUSTOMERS C JOIN ORDERS O ON O.CUSTOMER_ID = C.ID JOIN ORDERITEMS I ON I.ORDER_ID = O.ID JOIN PRODUCTS P ON P.ID = I.PRODUCT_ID GROUP BY C.NAME");
         JpaResultMapper mapper = new JpaResultMapper();
-        Double total = mapper.uniqueResult(q, Double.class);
-        return total;
+        return mapper.list(q, CustomerRevenue.class);
     }
 
-    public double calculateRevenueJooq() {
+    public List<CustomerRevenue> calculateRevenueJooq() {
         em.getTransaction().begin();
         Connection conn = em.unwrap(java.sql.Connection.class);
 
         DSLContext create = DSL.using(conn, SQLDialect.DERBY);
 
-        BigDecimal result = create.select(sum(PRODUCTS.PRICE)).
+        List<CustomerRevenue> list = create.select(CUSTOMERS.NAME, sum(PRODUCTS.PRICE)).
                 from(CUSTOMERS).
                 join(ORDERS).on(ORDERS.CUSTOMER_ID.eq(CUSTOMERS.ID)).
                 join(ORDERITEMS).on(ORDERITEMS.ORDER_ID.eq(ORDERS.ID)).
                 join(PRODUCTS).on(PRODUCTS.ID.eq(ORDERITEMS.PRODUCT_ID)).
-                fetchOneInto(BigDecimal.class);
+                groupBy(CUSTOMERS.NAME).
+                fetchInto(CustomerRevenue.class);
 
         em.getTransaction().commit();
-
-        return result.doubleValue();
+        
+        return list;
     }
 
 }
