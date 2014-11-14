@@ -4,6 +4,7 @@ import entity.Customer;
 import entity.Order;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 public class RevenueCalculator {
@@ -14,7 +15,7 @@ public class RevenueCalculator {
         this.em = em;
     }
 
-    public double calculateRevenue() {
+    public double calculateRevenueNaive() {
         TypedQuery q = em.createQuery("SELECT c FROM Customer c", Customer.class);
         List<Customer> customers = q.getResultList();
 
@@ -26,6 +27,12 @@ public class RevenueCalculator {
             }
         }
         
+        return total;
+    }
+    
+    public double calculateRevenueConstructorExpression() {
+        Query q = em.createQuery("SELECT SUM(i.product.price) FROM Customer c JOIN c.orders o JOIN o.items i");
+        Double total = (Double) q.getSingleResult();
         return total;
     }
 }

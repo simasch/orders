@@ -39,9 +39,22 @@ public class OrderTest {
     }
 
     @Test
-    public void calculateRevenue() {
+    public void calculateRevenueNaive() {
         RevenueCalculator rc = new RevenueCalculator(em);
-        double revenue = rc.calculateRevenue();
+        double revenue = rc.calculateRevenueNaive();
+        
+        
+        Assert.assertTrue(revenue > 0);
+        
+        System.out.println();
+        System.out.println("--> Revenue: " + revenue);
+        System.out.println();
+        
+    }
+    @Test
+    public void calculateRevenueConsturctorExpression() {
+        RevenueCalculator rc = new RevenueCalculator(em);
+        double revenue = rc.calculateRevenueConstructorExpression();
         
         
         Assert.assertTrue(revenue > 0);
