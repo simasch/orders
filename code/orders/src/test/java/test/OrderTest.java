@@ -1,13 +1,9 @@
 package test;
 
 import control.RevenueCalculator;
-import entity.Customer;
-import entity.Order;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 import junit.framework.Assert;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -42,7 +38,7 @@ public class OrderTest {
         }
     }
 
-    @Test @Ignore
+    @Test
     public void calculateRevenueNaive() {
         double revenue = rc.calculateRevenueNaive();
 
