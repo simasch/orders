@@ -11,6 +11,7 @@ import javax.persistence.TypedQuery;
 import junit.framework.Assert;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -21,11 +22,14 @@ public class OrderTest {
 
     private static EntityManagerFactory emf;
     private static EntityManager em;
+    private static RevenueCalculator rc;
 
     @BeforeClass
     public static void setUpClass() {
         emf = Persistence.createEntityManagerFactory("orders");
         em = emf.createEntityManager();
+
+        rc = new RevenueCalculator(em);
     }
 
     @AfterClass
@@ -38,30 +42,46 @@ public class OrderTest {
         }
     }
 
-    @Test
+    @Test @Ignore
     public void calculateRevenueNaive() {
-        RevenueCalculator rc = new RevenueCalculator(em);
         double revenue = rc.calculateRevenueNaive();
-        
-        
+
         Assert.assertTrue(revenue > 0);
-        
-        System.out.println();
-        System.out.println("--> Revenue: " + revenue);
-        System.out.println();
-        
+
+        printRevenue(revenue);
     }
+
     @Test
-    public void calculateRevenueConsturctorExpression() {
-        RevenueCalculator rc = new RevenueCalculator(em);
+    public void calculateRevenueConstructorExpression() {
         double revenue = rc.calculateRevenueConstructorExpression();
-        
-        
+
         Assert.assertTrue(revenue > 0);
-        
+
+        printRevenue(revenue);
+    }
+
+    @Test
+    public void calculateRevenueQlrm() {
+        double revenue = rc.calculateRevenueQlrm();
+
+        Assert.assertTrue(revenue > 0);
+
+        printRevenue(revenue);
+    }
+
+    @Test
+    public void calculateRevenueJooq() {
+        double revenue = rc.calculateRevenueJooq();
+
+        Assert.assertTrue(revenue > 0);
+
+        printRevenue(revenue);
+    }
+
+    private void printRevenue(double revenue) {
         System.out.println();
         System.out.println("--> Revenue: " + revenue);
         System.out.println();
-        
     }
+
 }
