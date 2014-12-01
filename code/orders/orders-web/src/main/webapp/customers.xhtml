@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Customers</title>
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css" rel="stylesheet" />
+    </h:head>
+    <h:body>
+        <h:form>
+            <div class="container">
+
+                <h1>Customers</h1>
+
+                <div class="row" style="padding-top: 20px;">
+                    <div class="col-sm-6"> 
+                        <h:inputText value="#{customerBean.searchText}"/>
+                        <h:outputText value=" "/>
+                        <h:commandButton value="Search V1" action="#{customerBean.searchV1()}"/>
+                        <h:outputText value=" "/>
+                        <h:commandButton value="Search V2" action="#{customerBean.searchV2()}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink value="Clear Results" action="#{customerBean.clear()}"/>
+                        <h:outputText value=" "/>
+                        <a href="/orders-web">Back</a>
+                    </div>
+                    <div class="col-sm-4" align="right">
+                        <h:outputText value="Found #{customerBean.numberOfCustomers} Customers."/>
+                    </div>
+                    <div class="col-sm-2" align="right">
+                        <span id="timing" style="color: red;">Still loading...</span>
+                    </div>
+                </div>
+
+                <div class="row" style="padding-top: 40px;">
+                    <div class="col-sm-12"> 
+
+                        <h:dataTable value="#{customerBean.customers}" var="customer" style="width: 100%" class="table table-bordered table-striped">
+                            <h:column>
+                                <f:facet name="header">Id</f:facet>
+                                    #{customer.id}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Name</f:facet>
+                                    #{customer.name}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Revenue</f:facet>
+                                    #{customer.revenue}
+                            </h:column>
+                        </h:dataTable>
+
+                    </div>
+                </div>
+            </div>
+
+        </h:form>
+    </h:body>
+
+    <script src="js/performance.js" />
+</html>
+

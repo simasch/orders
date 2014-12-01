@@ -56,4 +56,5 @@ public class Customer implements Serializable {
         }
         return revenue;
     }
+    
 }
