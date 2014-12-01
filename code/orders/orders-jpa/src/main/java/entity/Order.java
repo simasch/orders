@@ -35,14 +35,13 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    public double getPrice() {
+    public double getTotalAmount() {
         double total = 0;
         for (OrderItem item : items) {
             total += item.getProduct().getPrice();
         }
         return total;
     }
-
 
     public Customer getCustomer() {
         return customer;

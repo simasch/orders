@@ -52,7 +52,7 @@ public class Customer implements Serializable {
     public double getRevenue() {
         double revenue = 0;
         for (Order order : orders) {
-            revenue += order.getPrice();
+            revenue += order.getTotalAmount();
         }
         return revenue;
     }
