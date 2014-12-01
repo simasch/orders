@@ -1,7 +1,7 @@
 package boundry;
 
+import control.CustomerInfoDTO;
 import control.CustomerService;
-import entity.Customer;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
@@ -10,26 +10,35 @@ import javax.inject.Named;
 
 @Named
 @SessionScoped
-public class CustomerBean implements Serializable {
+public class CustomerV2Bean implements Serializable {
 
     @EJB
     private CustomerService customerService;
-    private List<Customer> customers;
+    private List<CustomerInfoDTO> customers;
 
     private String searchText = "";
 
     public void search() {
-        customers = customerService.getCustomers();
+        customers = customerService.getCustomersWithConstructorExpression();
     }
 
-    public List<Customer> getCustomers() {
+    public CustomerService getCustomerService() {
+        return customerService;
+    }
+
+    public void setCustomerService(CustomerService customerService) {
+        this.customerService = customerService;
+    }
+
+    public List<CustomerInfoDTO> getCustomers() {
         return customers;
     }
 
-    public void setCustomers(List<Customer> customers) {
+    public void setCustomers(List<CustomerInfoDTO> customers) {
         this.customers = customers;
     }
 
+  
     public String getSearchText() {
         return searchText;
     }

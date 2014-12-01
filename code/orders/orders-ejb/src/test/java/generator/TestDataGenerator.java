@@ -5,11 +5,11 @@ import entity.Order;
 import entity.OrderItem;
 import entity.Product;
 import java.util.Random;
-import java.util.UUID;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import org.kohsuke.randname.RandomNameGenerator;
 
 public class TestDataGenerator {
 
@@ -18,8 +18,9 @@ public class TestDataGenerator {
 
     public static void main(String[] args) {
         buildEntityManager();
-        
+
         Random random = new Random();
+        RandomNameGenerator randomNameGenerator = new RandomNameGenerator();
 
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
@@ -29,20 +30,20 @@ public class TestDataGenerator {
         em.persist(product);
         transaction.commit();
 
-        for (int i = 0; i < 300; i++) {
+        for (int i = 0; i < 200; i++) {
             transaction = em.getTransaction();
             transaction.begin();
 
             Customer customer = new Customer();
-            customer.setName(UUID.randomUUID().toString());
+            customer.setName(randomNameGenerator.next());
             em.persist(customer);
 
-            for (int j = 0; j < 500; j++) {
+            for (int j = 0; j < random.nextInt(50 - 1 + 1) + 1; j++) {
                 Order order = new Order();
                 order.setCustomer(customer);
                 customer.getOrders().add(order);
 
-                for (int k = 0; k < 100; k++) {
+                for (int k = 0; k < random.nextInt(20 - 1 + 1) + 1; k++) {
                     OrderItem item = new OrderItem();
                     item.setOrder(order);
                     item.setProduct(product);

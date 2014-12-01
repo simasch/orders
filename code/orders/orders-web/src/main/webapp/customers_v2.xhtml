@@ -6,6 +6,8 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css" rel="stylesheet" />
     </h:head>
     <h:body>
         <div align="center">
@@ -15,21 +17,25 @@
 
                     <h1>Customers</h1>
 
-                    <h:panelGrid columns="1">
-                        <h:inputText value="#{customerBean.searchText}"/>
+                    <p:inputText value="#{customerV2Bean.searchText}"/>
+                    <p:spacer width="20px"/>
+                    <p:commandButton ajax="false" value="Search" action="#{customerV2Bean.search()}"/>
 
-                        <h:commandButton value="Search" action="#{customerBean.search()}"/>
-                    </h:panelGrid>
+                    <br/><br/><br/>
 
-                    <br /><br />
-
-                    <p:dataTable value="#{customerBean.customers}" var="customer"
-                                 rows="10"
+                    <p:dataTable value="#{customerV2Bean.customers}" var="customer"
+                                 rows="1000"
                                  paginator="true"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  rowsPerPageTemplate="5,10,15">
+                        <p:column headerText="ID">
+                            #{customer.id}
+                        </p:column>
                         <p:column headerText="Name">
-                            #{customer.name}
+                            #{customer.customerName}
+                        </p:column>
+                        <p:column headerText="#Orders">
+                            #{customer.numberOfOrders}
                         </p:column>
                         <p:column headerText="Revenue">
                             #{customer.revenue}

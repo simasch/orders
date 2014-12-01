@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css" rel="stylesheet" />
+    </h:head>
+    <h:body>
+        <div align="center">
+            <div align="left" style="width: 600px;">
+
+                <h:form>
+
+                    <h1>Customers</h1>
+
+                    <p:inputText value="#{customerV1Bean.searchText}"/>
+                    <p:spacer width="20px"/>
+                    <p:commandButton ajax="false" value="Search" action="#{customerV1Bean.search()}"/>
+
+                    <br/><br/><br/>
+
+                    <p:dataTable value="#{customerV1Bean.customers}" var="customer"
+                                 rows="1000"
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15">
+                        <p:column headerText="ID">
+                            #{customer.id}
+                        </p:column>
+                        <p:column headerText="Name">
+                            #{customer.name}
+                        </p:column>
+                        <p:column headerText="#Orders">
+                            #{customer.orders.size()}
+                        </p:column>
+                        <p:column headerText="Revenue">
+                            #{customer.revenue}
+                        </p:column>
+                    </p:dataTable>
+
+                </h:form>
+
+            </div>
+        </div>
+    </h:body>
+</html>
+
