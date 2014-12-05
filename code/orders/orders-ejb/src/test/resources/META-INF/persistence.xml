@@ -6,6 +6,7 @@
     <class>entity.Customer</class>
     <class>entity.OrderItem</class>
     <class>entity.Product</class>
+    <class>entity.Address</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/orders"/>
       <property name="javax.persistence.jdbc.user" value="orders"/>

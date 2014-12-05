@@ -36,6 +36,7 @@
                 <configuration>
                     <version>6</version>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <applicationName>orders-ear</applicationName>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,4 +1,4 @@
-package control;
+package jooq;
 
 public class CustomerInfoDTO {
 
