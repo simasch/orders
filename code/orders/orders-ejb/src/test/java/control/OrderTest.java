@@ -46,7 +46,7 @@ public class OrderTest {
         }
     }
 
-    @Test
+    @Test @Ignore
     public void getCustomersWithEntityGraph() {
         TypedQuery<Customer> q = em.createQuery("SELECT c FROM Customer c ORDER BY c.lastname, c.firstname", Customer.class);
 
