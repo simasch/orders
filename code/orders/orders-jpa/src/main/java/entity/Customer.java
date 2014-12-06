@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.ColumnResult;
 import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +23,8 @@ import javax.persistence.Table;
             @ConstructorResult(targetClass = CustomerInfoDTO.class,
                     columns = {
                         @ColumnResult(name = "ID"),
-                        @ColumnResult(name = "NAME"),
+                        @ColumnResult(name = "LASTNAME"),
+                        @ColumnResult(name = "FIRSTNAME"),
                         @ColumnResult(name = "REVENUE", type = Double.class)}
             )
         })
@@ -34,7 +36,8 @@ public class Customer implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String name;
+    private String firstname;
+    private String lastname;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Order> orders = new HashSet<>();
@@ -51,12 +54,20 @@ public class Customer implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public Set<Order> getOrders() {

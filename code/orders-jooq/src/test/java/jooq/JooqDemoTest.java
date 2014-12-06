@@ -24,13 +24,13 @@ public class JooqDemoTest {
             DSLContext create = DSL.using(conn, SQLDialect.DERBY);
             
             List<CustomerInfoDTO> list = create.
-                    select(CUSTOMERS.ID, CUSTOMERS.NAME, sum(PRODUCTS.PRICE)).
+                    select(CUSTOMERS.ID, CUSTOMERS.LASTNAME, CUSTOMERS.FIRSTNAME, sum(PRODUCTS.PRICE)).
                     from(CUSTOMERS).
                     join(ORDERS).on(ORDERS.CUSTOMER_ID.eq(CUSTOMERS.ID)).
                     join(ORDERITEMS).on(ORDERITEMS.ORDER_ID.eq(ORDERS.ID)).
                     join(PRODUCTS).on(PRODUCTS.ID.eq(ORDERITEMS.PRODUCT_ID)).
-                    groupBy(CUSTOMERS.ID, CUSTOMERS.NAME).
-                    orderBy(CUSTOMERS.NAME).
+                    groupBy(CUSTOMERS.ID, CUSTOMERS.LASTNAME, CUSTOMERS.FIRSTNAME).
+                    orderBy(CUSTOMERS.LASTNAME, CUSTOMERS.FIRSTNAME).
                     fetchInto(CustomerInfoDTO.class);
             
             

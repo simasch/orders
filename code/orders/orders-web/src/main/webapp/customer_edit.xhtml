@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Customers</title>
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css" rel="stylesheet" />
+    </h:head>
+    <h:body>
+        <h:form>
+            <div class="container" >
+
+                <h1>Customer</h1>
+
+                <div class="form-group" style="padding-top: 20px;">
+                    <label>ID</label>
+                    <h:inputText styleClass="form-control" value="#{customerBean.customer.id}" disabled="true"/>
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <h:inputText styleClass="form-control" value="#{customerBean.customer.lastname}"/>
+                </div>
+                <div class="form-group">
+                    <label>First Name</label>
+                    <h:inputText styleClass="form-control" value="#{customerBean.customer.firstname}"/>
+                </div>
+
+                <h:commandButton styleClass="btn btn-default" value="Save" action="#{customerBean.save()}"/>
+
+            </div>
+
+        </h:form>
+    </h:body>
+</html>
+

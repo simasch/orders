@@ -4,12 +4,15 @@ import entity.Customer;
 import entity.Order;
 import entity.OrderItem;
 import entity.Product;
+import java.util.List;
 import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import org.kohsuke.randname.RandomNameGenerator;
+import org.soqqo.datagen.RandomDataGenerator;
+import org.soqqo.datagen.config.DataTypes.Name;
+import org.soqqo.datagen.config.GenConfig;
 
 public class TestDataGenerator {
 
@@ -20,22 +23,25 @@ public class TestDataGenerator {
         buildEntityManager();
 
         Random random = new Random();
-        RandomNameGenerator randomNameGenerator = new RandomNameGenerator();
 
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
         Product product = new Product();
-        product.setName("Aschenbecher");
+        product.setName("Bleistift");
         product.setPrice(2.5d);
         em.persist(product);
         transaction.commit();
 
-        for (int i = 0; i < 200; i++) {
+        RandomDataGenerator rdg = new RandomDataGenerator();
+        List<Customer> customers = rdg.generateList(400,
+                new GenConfig()
+                .name(Name.Firstname, "firstname")
+                .name(Name.Lastname, "lastname"), Customer.class);
+
+        for (Customer customer : customers) {
             transaction = em.getTransaction();
             transaction.begin();
 
-            Customer customer = new Customer();
-            customer.setName(randomNameGenerator.next());
             em.persist(customer);
 
             for (int j = 0; j < random.nextInt(50 - 1 + 1) + 1; j++) {

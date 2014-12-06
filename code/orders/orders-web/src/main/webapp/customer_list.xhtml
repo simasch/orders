@@ -16,19 +16,21 @@
 
                 <div class="row" style="padding-top: 20px;">
                     <div class="col-sm-6"> 
-                        <h:inputText value="#{customerBean.searchText}"/>
-                        <h:outputText value=" "/>
-                        <h:commandButton value="Search V1" action="#{customerBean.searchV1()}"/>
-                        <h:outputText value=" "/>
-                        <h:commandButton value="Search V2" action="#{customerBean.searchV2()}"/>
-                        <h:outputText value=" "/>
-                        <h:commandLink value="Clear Results" action="#{customerBean.clear()}"/>
-                        <h:outputText value=" "/>
-                        <a href="/orders-web">Back</a>
+                        <h:inputText style="margin-right: 10px;" value="#{customerBean.searchText}"/>
+
+                        <h:commandButton styleClass="btn btn-default" style="margin-right: 10px;" value="Search V1" action="#{customerBean.searchV1()}"/>
+
+                        <h:commandButton styleClass="btn btn-default" style="margin-right: 10px;" value="Search V2" action="#{customerBean.searchV2()}"/>
+
+                        <h:commandLink style="margin-right: 10px;" value="Clear" action="#{customerBean.clear()}"/>
+
+                        <h:commandLink style="margin-right: 10px;" value="Back" action="#{customerBean.back()}"/>
                     </div>
+                    
                     <div class="col-sm-4" align="right">
                         <h:outputText value="Found #{customerBean.numberOfCustomers} Customers."/>
                     </div>
+                    
                     <div class="col-sm-2" align="right">
                         <span id="timing" style="color: red;">Still loading...</span>
                     </div>
@@ -44,7 +46,7 @@
                             </h:column>
                             <h:column>
                                 <f:facet name="header">Name</f:facet>
-                                    #{customer.name}
+                                <h:commandLink value="#{customer.lastname} #{customer.firstname}" action="#{customerBean.edit(customer)}"/>  
                             </h:column>
                             <h:column>
                                 <f:facet name="header">Revenue</f:facet>

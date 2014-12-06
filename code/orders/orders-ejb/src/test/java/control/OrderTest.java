@@ -48,12 +48,12 @@ public class OrderTest {
     @Test
     public void calculateRevenueConstructorResult() {
         Query q = em.createNativeQuery(
-                "SELECT C.ID, C.NAME, SUM(P.PRICE) AS REVENUE "
+                "SELECT C.ID, C.LASTNAME, C.FIRSTNAME ,SUM(P.PRICE) AS REVENUE "
                 + "FROM CUSTOMERS C "
                 + "JOIN ORDERS O ON O.CUSTOMER_ID = C.ID "
                 + "JOIN ORDERITEMS I ON I.ORDER_ID = O.ID "
                 + "JOIN PRODUCTS P ON P.ID = I.PRODUCT_ID "
-                + "GROUP BY C.ID, C.NAME ORDER BY C.NAME",
+                + "GROUP BY C.ID, C.LASTNAME, C.FIRSTNAME ORDER BY C.LASTNAME, C.FIRSTNAME",
                 "CustomerInfoDTO");
         
         List<CustomerInfoDTO> list = q.getResultList();
@@ -64,10 +64,10 @@ public class OrderTest {
     @Test
     public void calculateRevenueQlrm() {
         Query q = em.createNativeQuery(
-                "SELECT C.ID, C.NAME, SUM(P.PRICE) "
+                "SELECT C.ID, C.LASTNAME, C.FIRSTNAME, SUM(P.PRICE) "
                 + "FROM CUSTOMERS C JOIN ORDERS O ON O.CUSTOMER_ID = C.ID "
                 + "JOIN ORDERITEMS I ON I.ORDER_ID = O.ID JOIN PRODUCTS P ON P.ID = I.PRODUCT_ID "
-                + "GROUP BY C.ID, C.NAME ORDER BY C.NAME");
+                + "GROUP BY C.ID, C.LASTNAME, C.FIRSTNAME ORDER BY C.LASTNAME, C.FIRSTNAME");
         
         JpaResultMapper mapper = new JpaResultMapper();
         
@@ -80,11 +80,12 @@ public class OrderTest {
     public void calculateRevenueConstructorExpressionJoinOn() {
         Query q = em.createQuery(
                 "SELECT "
-                + "NEW entity.CustomerInfoDTO(c.id, c.name, SUM(i.product.price)) "
+                + "NEW entity.CustomerInfoDTO(c.id, c.lastname, c.firstname, SUM(i.product.price)) "
                 + "FROM Customer c "
                 + "JOIN c.orders o ON o.customer_id = c.id "
                 + "JOIN o.items i "
-                + "GROUP BY c.name");
+                + "GROUP BY c.id, c.lastname, c.firstname "
+                + "ORDER BY c.lastname, c.firstname");
 
         List<CustomerInfoDTO> list = q.getResultList();
 

@@ -3,12 +3,14 @@ package jooq;
 public class CustomerInfoDTO {
 
     private final Long id;
-    private final String name;
+    private final String lastname;
+    private final String firstname;
     private final double revenue;
 
-    public CustomerInfoDTO(Long id, String name, double revenue) {
+    public CustomerInfoDTO(Long id, String lastname, String firstname, double revenue) {
         this.id = id;
-        this.name = name;
+        this.lastname = lastname;
+        this.firstname = firstname;
         this.revenue = revenue;
     }
 
@@ -16,8 +18,12 @@ public class CustomerInfoDTO {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getFirstname() {
+        return firstname;
     }
 
     public double getRevenue() {
