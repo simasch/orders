@@ -1,11 +1,19 @@
 package control;
 
+import entity.Customer;
+import entity.Customer_;
+import entity.Order_;
 import entity.CustomerInfoDTO;
+import entity.Order;
 import java.util.List;
+import java.util.Set;
+import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.Subgraph;
+import javax.persistence.TypedQuery;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -39,6 +47,18 @@ public class OrderTest {
     }
 
     @Test
+    public void getCustomersWithEntityGraph() {
+        TypedQuery<Customer> q = em.createQuery("SELECT c FROM Customer c ORDER BY c.lastname, c.firstname", Customer.class);
+
+        EntityGraph fetchDeep = em.createEntityGraph("Customer.fetchDeep");
+        q.setHint("javax.persistence.fetchgraph", fetchDeep);
+
+        List<Customer> list = q.getResultList();
+
+        Assert.assertNotNull(list);
+    }
+
+    @Test
     public void calculateRevenueConstructorExpression() {
         List<CustomerInfoDTO> list = customerService.getCustomersWithConstructorExpression();
 
@@ -55,7 +75,7 @@ public class OrderTest {
                 + "JOIN PRODUCTS P ON P.ID = I.PRODUCT_ID "
                 + "GROUP BY C.ID, C.LASTNAME, C.FIRSTNAME ORDER BY C.LASTNAME, C.FIRSTNAME",
                 "CustomerInfoDTO");
-        
+
         List<CustomerInfoDTO> list = q.getResultList();
 
         Assert.assertNotNull(list);
@@ -68,15 +88,16 @@ public class OrderTest {
                 + "FROM CUSTOMERS C JOIN ORDERS O ON O.CUSTOMER_ID = C.ID "
                 + "JOIN ORDERITEMS I ON I.ORDER_ID = O.ID JOIN PRODUCTS P ON P.ID = I.PRODUCT_ID "
                 + "GROUP BY C.ID, C.LASTNAME, C.FIRSTNAME ORDER BY C.LASTNAME, C.FIRSTNAME");
-        
+
         JpaResultMapper mapper = new JpaResultMapper();
-        
+
         List<CustomerInfoDTO> list = mapper.list(q, CustomerInfoDTO.class);
 
         Assert.assertNotNull(list);
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void calculateRevenueConstructorExpressionJoinOn() {
         Query q = em.createQuery(
                 "SELECT "

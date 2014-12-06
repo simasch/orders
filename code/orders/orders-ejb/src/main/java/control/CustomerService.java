@@ -2,9 +2,9 @@ package control;
 
 import entity.CustomerInfoDTO;
 import entity.Customer;
-import entity.Order;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -28,6 +28,7 @@ public class CustomerService {
 //                order.getItems().iterator();
 //            }
 //        }
+        
 
         return list;
     }

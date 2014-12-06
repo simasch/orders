@@ -7,11 +7,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.ColumnResult;
 import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
@@ -28,6 +30,20 @@ import javax.persistence.Table;
                         @ColumnResult(name = "REVENUE", type = Double.class)}
             )
         })
+ @NamedEntityGraph(
+        name = "Customer.fetchDeep",
+        attributeNodes = {
+            @NamedAttributeNode(value = "orders", subgraph = "ordersGraph")
+        },
+        subgraphs = {
+            @NamedSubgraph(
+                    name = "ordersGraph",
+                    attributeNodes = {
+                        @NamedAttributeNode("items")
+                    }
+            )
+        }
+    )
 public class Customer implements Serializable {
 
     private static final long serialVersionUID = 1L;
