@@ -44,6 +44,10 @@ public class CustomerBean implements Serializable {
         return "customer_list.xhtml";
     }
 
+    public String cancel() {
+        return "customer_list.xhtml";
+    }
+
     public String back() {
         customers = null;
         
