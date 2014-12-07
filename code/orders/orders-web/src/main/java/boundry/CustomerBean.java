@@ -32,8 +32,8 @@ public class CustomerBean implements Serializable {
         customers = null;
     }
     
-    public String edit(Customer customer) {
-        this.customer = customer;
+    public String edit(Long id) {
+        this.customer = customerService.find(Customer.class, id);
         
         return "customer_edit.xhtml";
     }

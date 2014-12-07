@@ -2,9 +2,9 @@ package control;
 
 import entity.CustomerInfoDTO;
 import entity.Customer;
+import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -28,8 +28,6 @@ public class CustomerService {
 //                order.getItems().iterator();
 //            }
 //        }
-        
-
         return list;
     }
 
@@ -42,8 +40,12 @@ public class CustomerService {
 
         return q.getResultList();
     }
-    
-    public <T>T save(T t) {
+
+    public <T> T find(Class<T> c, Serializable id) {
+        return em.find(c, id);
+    }
+
+    public <T> T save(T t) {
         return em.merge(t);
     }
 

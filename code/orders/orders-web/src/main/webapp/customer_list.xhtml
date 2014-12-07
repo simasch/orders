@@ -16,7 +16,7 @@
 
                 <div class="row" style="padding-top: 20px;">
                     <div class="col-sm-6"> 
-                        <h:inputText style="margin-right: 10px;" value="#{customerBean.searchText}"/>
+                        <h:inputText styleClass="form-control" style="margin-right: 10px;" value="#{customerBean.searchText}"/>
 
                         <h:commandButton styleClass="btn btn-default" style="margin-right: 10px;" value="Search V1" action="#{customerBean.searchV1()}"/>
 
@@ -26,11 +26,11 @@
 
                         <h:commandLink style="margin-right: 10px;" value="Back" action="#{customerBean.back()}"/>
                     </div>
-                    
+
                     <div class="col-sm-4" align="right">
                         <h:outputText value="#{customerBean.numberOfCustomers} Customers found."/>
                     </div>
-                    
+
                     <div class="col-sm-2" align="right">
                         <span id="timing" style="color: red;">Still loading...</span>
                     </div>
@@ -39,18 +39,20 @@
                 <div class="row" style="padding-top: 40px;">
                     <div class="col-sm-12"> 
 
-                        <h:dataTable value="#{customerBean.customers}" var="customer" style="width: 100%" class="table table-bordered table-striped">
+                        <h:dataTable value="#{customerBean.customers}" var="customer" style="width: 100%" class="table table-striped">
                             <h:column>
                                 <f:facet name="header">Id</f:facet>
                                     #{customer.id}
                             </h:column>
                             <h:column>
                                 <f:facet name="header">Name</f:facet>
-                                <h:commandLink value="#{customer.lastname} #{customer.firstname}" action="#{customerBean.edit(customer)}"/>  
+                                <h:commandLink value="#{customer.lastname} #{customer.firstname}" action="#{customerBean.edit(customer.id)}"/>  
                             </h:column>
                             <h:column>
                                 <f:facet name="header">Revenue</f:facet>
-                                    #{customer.revenue}
+                                <h:outputText value="#{customer.revenue}">
+                                    <f:convertNumber locale="de_CH" pattern="#####0.00"/>
+                                </h:outputText>
                             </h:column>
                         </h:dataTable>
 
