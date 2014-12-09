@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-  <persistence-unit name="orders-test" transaction-type="RESOURCE_LOCAL">
+  <persistence-unit name="ch.simas.orders_orders-jpql-demo_jar_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>entity.Order</class>
+    <class>entity.Address</class>
     <class>entity.Customer</class>
+    <class>entity.Order</class>
     <class>entity.OrderItem</class>
     <class>entity.Product</class>
-    <class>entity.Address</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:log4jdbc:derby://localhost:1527/orders"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/orders"/>
       <property name="javax.persistence.jdbc.user" value="orders"/>
-      <property name="javax.persistence.jdbc.driver" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
+      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
       <property name="javax.persistence.jdbc.password" value="orders"/>
-      <property name="javax.persistence.schema-generation.database.action" value="create-or-extend-tables"/>
-      <property name="eclipselink.logging.level" value="OFF"/>
     </properties>
   </persistence-unit>
 </persistence>

@@ -11,5 +11,6 @@
     <module>orders-web</module>
     <module>orders-ejb</module>
     <module>orders-jpa</module>
+    <module>orders-jpql-demo</module>
   </modules>
 </project>
